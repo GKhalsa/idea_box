@@ -11,6 +11,7 @@ function launchSequence(){
       var title = $('#ideaTitle').val();
       var body = $('#ideaBody').val();
       handlers.create(title, body);
+      $('#ideaForm')[0].reset();
     });
 }
 
@@ -33,7 +34,7 @@ var handlers = {
       url: '/api/v1/ideas',
       data: {idea:{title: title, body: body}},
       success: function(newIdea){
-        $('ul').append('<li>title:'+newIdea.title + '|| body: ' + newIdea.body +' || quality: ' + newIdea.quality +'</li>');
+        $('ul').append('<li>title:'+ newIdea.title + '|| body: ' + newIdea.body +' || quality: ' + newIdea.quality +'</li>');
       }
     });
   }
