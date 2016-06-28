@@ -14,7 +14,7 @@ function launchSequence(){
       $('#ideaForm')[0].reset();
     });
 
-    $('ul').on('click', '.delete', function(event){
+    $('#ideaList').on('click', '.delete', function(event){
       var id = $(this).parent().data('postId');
       $(this).parent().remove();
       handlers.delete(id);
@@ -23,7 +23,11 @@ function launchSequence(){
 }
 
 function appendNewIdea(idea){
-  $('ul').append('<li data-post-id="'+ idea.id + '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' + idea.quality +'       <input type="button" class="delete" value="Delete"/></li>');
+  var listItem = $('#ideaList').append('<div data-post-id="'+ idea.id + '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' + idea.quality +'       <input type="button" class="delete" value="Delete"/></div>');
+  // var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
+  // var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
+  // upvote.appendTo(listItem);
+  // downvote.appendTo(listItem);
 }
 
 
@@ -34,7 +38,11 @@ var views = {
       var title = ideasResponse[i].title;
       var body = ideasResponse[i].body;
       var quality = ideasResponse[i].quality;
-      $('ul').append('<li data-post-id="'+ id + '">title:'+title + '|| body: ' + body +' || quality: ' + quality +'  <input type="button" class="delete" value="Delete"/></li>');
+      var listItem = $('#ideaList').append('<div data-post-id="'+ id + '">title:'+title + '|| body: ' + body +' || quality: ' + quality +'  <input type="button" class="delete" value="Delete"/></div>');
+      // var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
+      // var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
+      // upvote.appendTo(listItem);
+      // downvote.appendTo(listItem);
     }
   }
 };
@@ -57,7 +65,6 @@ var handlers = {
       method: 'DELETE',
       url: '/api/v1/ideas/' + id,
       data: {id: id}
-      // success: launchSequence()
     });
   }
 };
