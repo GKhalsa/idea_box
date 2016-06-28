@@ -1,15 +1,29 @@
-<h1>Idea Box</h1>
-
-<div>
-  <h3>Ideas:</h3>
-  <div id="ideaList">
+<div class="container">
+  <div class="text-center">
+    <h1>Idea Box</h1>
   </div>
-</div>
 
-<div>
-  <form id="ideaForm">
-    <input type="text" name="title" id="ideaTitle"><br>
-    <textarea name="textarea" id="ideaBody"></textarea>
-    <input id="submitButton" type="submit" value="Save">
-  </form>
+  <div>
+    <form id="ideaForm" class="form-control">
+      <fieldset class="form-group"><br/>
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="title" id="ideaTitle" placeholder="Title"><br>
+          <input type="text" class="form-control" name="title" id="ideaTitle" placeholder="Tags"><br>
+        </div>
+        <div class="col-md-6">
+          <textarea name="textarea" class="form-control" id="ideaBody" placeholder="Body" rows="4"></textarea>
+        </div>
+        <div class="col-md-12">
+          <input id="submitButton" class="btn btn-secondary btn-lg btn-block" type="submit" value="Save">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div>
+    <h3>Ideas:</h3>
+    <div id="ideaList">
+    </div>
+  </div>
+
 </div>

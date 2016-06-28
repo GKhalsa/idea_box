@@ -12,6 +12,10 @@ class Api::V1::IdeasController < Api::ApiController
     respond_with :api, :v1, Idea.destroy(params[:id]), location: nil
   end
 
+  def update
+    respond_with Idea.find(params[:id]).update(quality: 0)
+  end
+
   private
 
     def idea_params
