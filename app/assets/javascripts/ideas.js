@@ -13,15 +13,28 @@ function launchSequence(){
       handlers.create(title, body);
       $('#ideaForm')[0].reset();
     });
+
+    $('ul').on('click', '.delete', function(event){
+      var id = $(this).parent().data('postId');
+      $(this).parent().remove();
+      handlers.delete(id);
+    });
+
 }
+
+function appendNewIdea(idea){
+  $('ul').append('<li data-post-id="'+ idea.id + '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' + idea.quality +'       <input type="button" class="delete" value="Delete"/></li>');
+}
+
 
 var views = {
   index: function(ideasResponse){
     for(var i = 0; i < ideasResponse.length; i++){
+      var id = ideasResponse[i].id;
       var title = ideasResponse[i].title;
       var body = ideasResponse[i].body;
       var quality = ideasResponse[i].quality;
-      $('ul').append('<li>title:'+title + '|| body: ' + body +' || quality: ' + quality +'</li>');
+      $('ul').append('<li data-post-id="'+ id + '">title:'+title + '|| body: ' + body +' || quality: ' + quality +'  <input type="button" class="delete" value="Delete"/></li>');
     }
   }
 };
@@ -34,8 +47,17 @@ var handlers = {
       url: '/api/v1/ideas',
       data: {idea:{title: title, body: body}},
       success: function(newIdea){
-        $('ul').append('<li>title:'+ newIdea.title + '|| body: ' + newIdea.body +' || quality: ' + newIdea.quality +'</li>');
+        appendNewIdea(newIdea);
       }
+    });
+  },
+  delete: function(id){
+    $.ajax({
+      dataType: 'json',
+      method: 'DELETE',
+      url: '/api/v1/ideas/' + id,
+      data: {id: id}
+      // success: launchSequence()
     });
   }
 };
