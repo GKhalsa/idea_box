@@ -16,18 +16,28 @@ function launchSequence(){
 
     $('#ideaList').on('click', '.delete', function(event){
       var id = $(this).parent().data('postId');
-      $(this).parent().remove();
       handlers.delete(id);
+    });
+
+    $('#ideaList').on('click', '.upvoteButton',function(){
+      
     });
 
 }
 
 function appendNewIdea(idea){
-  var listItem = $('#ideaList').append('<div data-post-id="'+ idea.id + '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' + idea.quality +'       <input type="button" class="delete" value="Delete"/></div>');
-  // var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
-  // var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
-  // upvote.appendTo(listItem);
-  // downvote.appendTo(listItem);
+  var listItem = $('#ideaList').append('<div data-post-id="'+ idea.id +
+   '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' +
+    idea.quality +'       <input type="button" class="delete" value="Delete"/></div>');
+    appendUpvoteDownvote();
+}
+
+function appendUpvoteDownvote(){
+  var lastItem = $('#ideaList').children().last();
+  var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
+  var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
+  upvote.appendTo(lastItem);
+  downvote.appendTo(lastItem);
 }
 
 
@@ -38,14 +48,17 @@ var views = {
       var title = ideasResponse[i].title;
       var body = ideasResponse[i].body;
       var quality = ideasResponse[i].quality;
-      var listItem = $('#ideaList').append('<div data-post-id="'+ id + '">title:'+title + '|| body: ' + body +' || quality: ' + quality +'  <input type="button" class="delete" value="Delete"/></div>');
-      // var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
-      // var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
-      // upvote.appendTo(listItem);
-      // downvote.appendTo(listItem);
+      var listItem = $('#ideaList').append('<div data-post-id="'+ id +
+       '">title:'+title + '|| body: ' + body +' || quality: ' + quality +
+       '  <input type="button" class="delete" value="Delete"/></div>');
+      appendUpvoteDownvote();
     }
   }
 };
+
+function removeIdea(id){
+  $('[data-post-id='+ id + ']').remove();
+}
 
 var handlers = {
   create: function(title, body){
@@ -64,7 +77,8 @@ var handlers = {
       dataType: 'json',
       method: 'DELETE',
       url: '/api/v1/ideas/' + id,
-      data: {id: id}
+      data: {id: id},
+      success: removeIdea(id)
     });
   }
 };
