@@ -56,6 +56,29 @@ function launchSequence(){
       handlers.editIdea(id, content, newBody);
     });
 
+    $('#searchBar').on('keyup', function(){
+      var theSearch = $(this).val();
+      searchedIdeas(theSearch);
+
+    });
+
+}
+
+// function searchFilter(ideasResponse){
+//   debugger;
+//   return ideasResponse;
+//   // var searchedIdeas = ideasResponse.filter(function(object){
+//   //   return object.title.includes(query) || object.body.includes(query);
+//   // });
+//   // debugger;
+// }
+
+function searchResult(response, blah){
+  
+}
+
+function searchedIdeas(query){
+  var ideas = $.getJSON('/api/v1/search/?query=' + JSON.stringify(query)).then(searchResult);
 }
 
 function appendNewIdea(idea){

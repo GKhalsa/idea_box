@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :ideas, only: [:index, :create, :destroy, :update]
       resources :edit, only: [:update]
+      resources :search, only: [:index]
     end
   end
 
