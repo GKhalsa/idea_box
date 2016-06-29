@@ -56,8 +56,10 @@ function theAppender(id, title, body, quality){
           '<h5>' + body + '</h5>' +
         '</div>'+
 
-        '<div class="col-md-3">'+
-          '<h2>' + quality + '</h2>' +
+        '<div class="col-md-3" id=quality-'+id+'>'+
+          '<h2>' +
+            '<span>' + quality + '</span>' +
+          '</h2>' +
         '</div>'+
         '<br/><br/><br/>'+
       '</div>'+
@@ -84,8 +86,10 @@ function removeIdea(id){
 }
 
 function changeSuccess(id){
-  debugger;
-  $('[data-post-id='+ id + ']').load(document.URL + ' [data-post-id='+ id + ']');
+  var currentQuality = $('#quality-' + id).children().find('span').text();
+  var statuses = {swill: 'plausible', plausible: 'genius' };
+  var nextQuality = statuses[currentQuality];
+  $('#quality-' + id).children().find('span').text(nextQuality);
 }
 
 var handlers = {
