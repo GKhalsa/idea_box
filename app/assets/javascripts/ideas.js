@@ -56,6 +56,21 @@ function launchSequence(){
       handlers.editIdea(id, content, newBody);
     });
 
+    $('#searchBar').on('keyup', function(){
+      var theSearch = $(this).val();
+      searchedIdeas(theSearch);
+
+    });
+
+}
+
+
+function searchResult(searchResponse){
+  views.reset(searchResponse);
+}
+
+function searchedIdeas(query){
+  var ideas = $.getJSON('/api/v1/search/?query=' + JSON.stringify(query)).then(searchResult);
 }
 
 function appendNewIdea(idea){
@@ -108,6 +123,10 @@ var views = {
       theAppender(id,title, body, quality);
       appendUpvoteDownvote();
     }
+  },
+  reset: function(searchResponse){
+    $('#ideaList').children().remove();
+    this.index(searchResponse);
   }
 };
 
