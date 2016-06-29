@@ -1,0 +1,47 @@
+var handlers = {
+  create: function(title, body){
+    $.ajax({
+      dataType: 'json',
+      method: 'POST',
+      url: '/api/v1/ideas',
+      data: {idea:{title: title, body: body}},
+      success: function(newIdea){
+        appendNewIdea(newIdea);
+      }
+    });
+  },
+  delete: function(id){
+    $.ajax({
+      dataType: 'json',
+      method: 'DELETE',
+      url: '/api/v1/ideas/' + id,
+      data: {id: id},
+      success: removeIdea(id)
+    });
+  },
+  patch: function(id, quality){
+    $.ajax({
+      dataType: 'json',
+      method: 'PATCH',
+      url: '/api/v1/ideas/' + id,
+      data: {id: id, quality: quality},
+      success: upvoteDom(id)
+    });
+  },
+  downvote: function(id, quality){
+    $.ajax({
+      dataType: 'json',
+      method: 'PATCH',
+      url: '/api/v1/ideas/' + id,
+      data: {id: id, quality: quality},
+      success: downvoteDom(id)
+    });
+  },
+  editIdea: function(id, content, value){
+    $.ajax({
+      method: 'PATCH',
+      url: '/api/v1/edit/' + id,
+      data: content + '=' + value
+    });
+  }
+};
