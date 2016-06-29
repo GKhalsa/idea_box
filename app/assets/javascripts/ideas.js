@@ -83,17 +83,17 @@ function appendNewIdea(idea){
 }
 
 function appendUpvoteDownvote(){
-  var lastItem = $('#ideaList').children().last();
+  var firstItem = $('#ideaList').children().first();
   var upvote = $('<button />').addClass('upvoteButton btn btn-secondary').text('thumbs up');
   var downvote = $('<button />').addClass('downvoteButton btn btn-secondary').text('thumbs down');
   var deleteButton = $('<button />').addClass('delete btn btn-secondary').text('Delete');
-  upvote.appendTo(lastItem);
-  downvote.appendTo(lastItem);
-  deleteButton.appendTo(lastItem);
+  upvote.appendTo(firstItem);
+  downvote.appendTo(firstItem);
+  deleteButton.appendTo(firstItem);
 }
 
 function theAppender(id, title, body, quality){
-  $('#ideaList').append(
+  $('#ideaList').prepend(
     '<li class="list-group-item" data-post-id="'+ id +'">'+
       '<div clas="row">'+
         '<div class="col-md-5">'+
