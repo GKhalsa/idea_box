@@ -29,18 +29,40 @@ function launchSequence(){
 }
 
 function appendNewIdea(idea){
-  var listItem = $('#ideaList').append('<div data-post-id="'+ idea.id +
-   '">title:'+ idea.title + '|| body: ' + idea.body +' || quality: ' +
-    idea.quality +'       <input type="button" class="delete" value="Delete"/></div>');
-    appendUpvoteDownvote();
+  var id = idea.id;
+  var title = idea.title;
+  var body = idea.body;
+  var quality = idea.quality;
+  theAppender(id, title, body, quality);
+  appendUpvoteDownvote();
 }
 
 function appendUpvoteDownvote(){
   var lastItem = $('#ideaList').children().last();
-  var upvote = $('<button />').addClass('upvoteButton').text('thumbs up');
-  var downvote = $('<button />').addClass('downvoteButton').text('thumbs down');
+  var upvote = $('<button />').addClass('upvoteButton btn btn-secondary').text('thumbs up');
+  var downvote = $('<button />').addClass('downvoteButton btn btn-secondary').text('thumbs down');
+  var deleteButton = $('<button />').addClass('delete btn btn-secondary').text('Delete');
   upvote.appendTo(lastItem);
   downvote.appendTo(lastItem);
+  deleteButton.appendTo(lastItem);
+}
+
+function theAppender(id, title, body, quality){
+  $('#ideaList').append(
+    '<li class="list-group-item" data-post-id="'+ id +'">'+
+      '<div clas="row">'+
+        '<div class="col-md-5">'+
+          '<h2>' + title + '</h2>' +
+          '<h5>' + body + '</h5>' +
+        '</div>'+
+
+        '<div class="col-md-3">'+
+          '<h2>' + quality + '</h2>' +
+        '</div>'+
+        '<br/><br/><br/>'+
+      '</div>'+
+    '</li>'
+  );
 }
 
 
@@ -51,9 +73,7 @@ var views = {
       var title = ideasResponse[i].title;
       var body = ideasResponse[i].body;
       var quality = ideasResponse[i].quality;
-      var listItem = $('#ideaList').append('<div data-post-id="'+ id +
-       '">title:'+title + '|| body: ' + body +' || quality: ' + quality +
-       '  <input type="button" class="delete" value="Delete"/></div>');
+      theAppender(id,title, body, quality);
       appendUpvoteDownvote();
     }
   }
