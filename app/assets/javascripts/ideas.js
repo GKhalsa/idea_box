@@ -14,6 +14,7 @@ function launchSequence(){
       $('#ideaForm')[0].reset();
     });
 
+
     $('#ideaList').on('click', '.delete', function(event){
       var id = $(this).parent().data('postId');
       handlers.delete(id);
@@ -31,7 +32,28 @@ function launchSequence(){
       var quality = $('#quality-' + id).children().find('span').text();
       var nextQuality =  downvoteStatus(quality);
       handlers.downvote(id, nextQuality);
+    });
 
+    $('#ideaList').on('click', '.title', function(){
+      $(this).attr('contenteditable', true);
+    });
+
+    $('#ideaList').on('blur', '.title', function(){
+      var id = $(this).data('titleId');
+      var newTitle = $(this).html();
+      var content = 'title';
+      handlers.editIdea(id, content, newTitle);
+    });
+
+    $('#ideaList').on('click', '.body', function(){
+      $(this).attr('contenteditable', true);
+    });
+
+    $('#ideaList').on('blur', '.body', function(){
+      var id = $(this).data('bodyId');
+      var newBody = $(this).html();
+      var content = 'body';
+      handlers.editIdea(id, content, newBody);
     });
 
 }
@@ -60,8 +82,8 @@ function theAppender(id, title, body, quality){
     '<li class="list-group-item" data-post-id="'+ id +'">'+
       '<div clas="row">'+
         '<div class="col-md-5">'+
-          '<h2>' + title + '</h2>' +
-          '<h5>' + body + '</h5>' +
+          '<h2>' + '<div class=title data-title-id="'+ id +'">' +  title  +'</div>'+  '</h2>' +
+          '<h5>' + '<div class=body data-body-id="'+ id +'">' +  body +  '</div>'+ '</h5>' +
         '</div>'+
 
         '<div class="col-md-3" id=quality-'+id+'>'+
@@ -152,6 +174,13 @@ var handlers = {
       url: '/api/v1/ideas/' + id,
       data: {id: id, quality: quality},
       success: downvoteDom(id)
+    });
+  },
+  editIdea: function(id, content, value){
+    $.ajax({
+      method: 'PATCH',
+      url: '/api/v1/edit/' + id,
+      data: content + '=' + value
     });
   }
 };
