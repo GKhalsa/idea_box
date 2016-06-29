@@ -20,9 +20,17 @@ function launchSequence(){
     });
 
     $('#ideaList').on('click', '.upvoteButton',function(){
-      // debugger;
       var id = $(this).parent().data('postId');
-      handlers.patch(id);
+      var quality = $('#quality-' + id).children().find('span').text();
+      var nextQuality =  upvoteStatus(quality);
+      handlers.patch(id, nextQuality);
+    });
+
+    $('#ideaList').on('click', '.downvoteButton', function(){
+      var id = $(this).parent().data('postId');
+      var quality = $('#quality-' + id).children().find('span').text();
+      var nextQuality =  downvoteStatus(quality);
+      handlers.downvote(id, nextQuality);
 
     });
 
@@ -85,10 +93,25 @@ function removeIdea(id){
   $('[data-post-id='+ id + ']').remove();
 }
 
-function changeSuccess(id){
+function upvoteStatus(currentQuality){
+  var statuses = {swill: 'plausible', plausible: 'genius', genius: 'genius' };
+  return statuses[currentQuality];
+}
+
+function downvoteStatus(currentQuality){
+  var statuses = {genius: 'plausible', plausible: 'swill', swill: 'swill'};
+  return statuses[currentQuality];
+}
+
+function upvoteDom(id){
   var currentQuality = $('#quality-' + id).children().find('span').text();
-  var statuses = {swill: 'plausible', plausible: 'genius' };
-  var nextQuality = statuses[currentQuality];
+  var nextQuality = upvoteStatus(currentQuality);
+  $('#quality-' + id).children().find('span').text(nextQuality);
+}
+
+function downvoteDom(id){
+  var currentQuality = $('#quality-' + id).children().find('span').text();
+  var nextQuality = downvoteStatus(currentQuality);
   $('#quality-' + id).children().find('span').text(nextQuality);
 }
 
@@ -113,13 +136,22 @@ var handlers = {
       success: removeIdea(id)
     });
   },
-  patch: function(id){
+  patch: function(id, quality){
     $.ajax({
       dataType: 'json',
       method: 'PATCH',
       url: '/api/v1/ideas/' + id,
-      data: {id: id},
-      success: changeSuccess(id)
+      data: {id: id, quality: quality},
+      success: upvoteDom(id)
+    });
+  },
+  downvote: function(id, quality){
+    $.ajax({
+      dataType: 'json',
+      method: 'PATCH',
+      url: '/api/v1/ideas/' + id,
+      data: {id: id, quality: quality},
+      success: downvoteDom(id)
     });
   }
 };

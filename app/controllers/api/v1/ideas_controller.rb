@@ -13,7 +13,7 @@ class Api::V1::IdeasController < Api::ApiController
   end
 
   def update
-    respond_with Idea.find(params[:id]).update(quality: 0)
+    respond_with Idea.find(params[:id]).update(quality: params[:quality])
   end
 
   private
