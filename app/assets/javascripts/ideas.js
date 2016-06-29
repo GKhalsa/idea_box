@@ -64,17 +64,9 @@ function launchSequence(){
 
 }
 
-// function searchFilter(ideasResponse){
-//   debugger;
-//   return ideasResponse;
-//   // var searchedIdeas = ideasResponse.filter(function(object){
-//   //   return object.title.includes(query) || object.body.includes(query);
-//   // });
-//   // debugger;
-// }
 
-function searchResult(response, blah){
-  
+function searchResult(searchResponse){
+  views.reset(searchResponse);
 }
 
 function searchedIdeas(query){
@@ -131,6 +123,10 @@ var views = {
       theAppender(id,title, body, quality);
       appendUpvoteDownvote();
     }
+  },
+  reset: function(searchResponse){
+    $('#ideaList').children().remove();
+    this.index(searchResponse);
   }
 };
 
