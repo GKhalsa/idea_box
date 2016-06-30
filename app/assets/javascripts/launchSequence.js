@@ -7,6 +7,8 @@ function launchSequence(){
       views.index(ideasResponse);
     });
 
+  handlers.getTags();
+
   $( "#submitButton" ).click(function(event){
     event.preventDefault();
     var title = $('#ideaTitle').val();
