@@ -47,9 +47,20 @@ function findUnique(duplicatesArray){
   return uniqueArray;
 }
 
+function addTagButton(tag){
+  return $('<button />').addClass('tagButton btn btn-info').text(tag);
+}
 
 function addTag(tag){
-  if (tag.length !== 0 && $("#searchBox").find("button:contains("+tag+")").length === 0 ) $("#searchBox").append($('<button />').addClass('tagButton btn btn-info').text(tag));
+  if (tagExists(tag) && tagNotAlreadyThere(tag)) $("#searchBox").append(addTagButton(tag));
+}
+
+function tagExists(tag){
+  return tag.length !== 0;
+}
+
+function tagNotAlreadyThere(tag){
+  return $("#searchBox").find("button:contains("+tag+")").length === 0;
 }
 
 function appendTags(tags){
