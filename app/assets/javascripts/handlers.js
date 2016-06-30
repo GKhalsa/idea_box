@@ -43,5 +43,13 @@ var handlers = {
       url: '/api/v1/edit/' + id,
       data: content + '=' + value
     });
+  },
+  postId: function(tags){
+    $.ajax({
+      dataType: 'json'
+    });
+  },
+  getTags: function(){
+
   }
 };

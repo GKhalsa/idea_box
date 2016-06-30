@@ -5,7 +5,9 @@ function appendNewIdea(idea, tags){
   var quality = idea.quality;
   theAppender(id, title, body, quality);
   appendUpvoteDownvote();
-  appendTags(tags);
+  var sanitized_tags = findUnique(tags.split(","));
+  appendTags(sanitized_tags);
+  handlers.postTags(sanitized_tags);
 }
 
 function theAppender(id, title, body, quality){
@@ -38,10 +40,18 @@ function appendUpvoteDownvote(){
   deleteButton.appendTo(firstItem);
 }
 
+function findUnique(duplicatesArray){
+  var uniqueArray = duplicatesArray.filter(function(elem, pos, arr) {
+    return arr.indexOf(elem) == pos;
+  });
+  return uniqueArray;
+}
+
 function appendTags(tags){
   var firstItem = $('#ideaList').children().first();
-  var tag = $('<button />').addClass('tagButton btn btn-secondary').text(tags.split(",")[0]);
-  tag.appendTo(firstItem);
+  tags.forEach(function(tag){
+    $('<button />').addClass('tagButton btn btn-danger').text(tag).appendTo(firstItem);
+  });
 }
 
 function removeIdea(id){

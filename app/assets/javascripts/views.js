@@ -5,6 +5,7 @@ var views = {
       var title = ideasResponse[i].title;
       var body = ideasResponse[i].body;
       var quality = ideasResponse[i].quality;
+      var tags = handlers.getTags;
       theAppender(id,title, body, quality);
       appendUpvoteDownvote();
     }
