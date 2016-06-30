@@ -66,9 +66,11 @@ function launchSequence(){
 
   $("#searchBox").on('click', '.tagButton',function(e){
     e.preventDefault();
-    var tag = $(this).html();
+    if ($("#searchBox").find("button:contains("+'All'+")").length === 0)  addTag("All");
 
+    var tag = $(this).html();
     $(".list-group-item").find("button:not(:contains("+ tag +"))").parent().hide();
     $(".list-group-item").find("button:contains("+tag+")").parent().show();
+    if (tag === "All") $(".list-group-item").show();
   });
 }
