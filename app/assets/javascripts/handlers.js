@@ -44,14 +44,6 @@ var handlers = {
       data: content + '=' + value
     });
   },
-  // postId: function(tags){
-  //   $.ajax({
-  //     dataType: 'json',
-  //     method: 'POST',
-  //     url: '/api/v1/tags',
-  //     data: {tags: tags}
-  //   });
-  // },
   getTags: function(){
     $.getJSON('/api/v1/tags').then(
       function(tagResponse){

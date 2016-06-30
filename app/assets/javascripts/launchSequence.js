@@ -64,4 +64,8 @@ function launchSequence(){
     searchedIdeas(theSearch);
   });
 
+  $("#searchBox").on('click', '.tagButton',function(e){
+    e.preventDefault();
+    $('.list-group-item').toggle();
+  });
 }
