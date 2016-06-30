@@ -1,10 +1,11 @@
-function appendNewIdea(idea){
+function appendNewIdea(idea, tags){
   var id = idea.id;
   var title = idea.title;
   var body = idea.body;
   var quality = idea.quality;
   theAppender(id, title, body, quality);
   appendUpvoteDownvote();
+  appendTags(tags);
 }
 
 function theAppender(id, title, body, quality){
@@ -35,6 +36,12 @@ function appendUpvoteDownvote(){
   upvote.appendTo(firstItem);
   downvote.appendTo(firstItem);
   deleteButton.appendTo(firstItem);
+}
+
+function appendTags(tags){
+  var firstItem = $('#ideaList').children().first();
+  var tag = $('<button />').addClass('tagButton btn btn-secondary').text(tags.split(",")[0]);
+  tag.appendTo(firstItem);
 }
 
 function removeIdea(id){

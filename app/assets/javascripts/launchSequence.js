@@ -11,10 +11,10 @@ function launchSequence(){
     event.preventDefault();
     var title = $('#ideaTitle').val();
     var body = $('#ideaBody').val();
-    handlers.create(title, body);
+    var tags = $('#ideaTags').val();
+    handlers.create(title, body, tags);
     $('#ideaForm')[0].reset();
   });
-
 
   $('#ideaList').on('click', '.delete', function(event){
     var id = $(this).parent().data('postId');

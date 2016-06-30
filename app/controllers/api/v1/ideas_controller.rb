@@ -5,6 +5,9 @@ class Api::V1::IdeasController < Api::ApiController
   end
 
   def create
+    # idea = Idea.create(idea_params)
+    # idea.add_tags(params[:idea][:tags])
+
     respond_with Idea.create(idea_params), location: nil
   end
 
