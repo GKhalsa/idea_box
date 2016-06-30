@@ -1,13 +1,14 @@
-function appendNewIdea(idea){
+function appendNewIdea(idea, tags){
   var id = idea.id;
   var title = idea.title;
   var body = idea.body;
   var quality = idea.quality;
-  theAppender(id, title, body, quality);
-  appendUpvoteDownvote();
+  var sanitized_tags = findUnique(tags.split(","));
+  theAppender(id, title, body, quality, sanitized_tags);
+  views.tags(sanitized_tags);
 }
 
-function theAppender(id, title, body, quality){
+function theAppender(id, title, body, quality, tags){
   $('#ideaList').prepend(
     '<li class="list-group-item" data-post-id="'+ id +'">'+
       '<div clas="row">'+
@@ -25,6 +26,8 @@ function theAppender(id, title, body, quality){
       '</div>'+
     '</li>'
   );
+  appendUpvoteDownvote();
+  if (tags[0].length !== 0) appendTags(tags);
 }
 
 function appendUpvoteDownvote(){
@@ -35,6 +38,25 @@ function appendUpvoteDownvote(){
   upvote.appendTo(firstItem);
   downvote.appendTo(firstItem);
   deleteButton.appendTo(firstItem);
+}
+
+function findUnique(duplicatesArray){
+  var uniqueArray = duplicatesArray.filter(function(elem, pos, arr) {
+    return arr.indexOf(elem) == pos;
+  });
+  return uniqueArray;
+}
+
+
+function addTag(tag){
+  $("#searchBox").append($('<button />').addClass('tagButton btn btn-info').text(tag));
+}
+
+function appendTags(tags){
+  var firstItem = $('#ideaList').children().first();
+  tags.forEach(function(tag){
+    $('<button />').addClass('tagButton btn btn-info').text(tag).appendTo(firstItem);
+  });
 }
 
 function removeIdea(id){

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :ideas, only: [:index, :create, :destroy, :update]
       resources :edit, only: [:update]
       resources :search, only: [:index]
+      resources :tags, only: [:index]
     end
   end
 

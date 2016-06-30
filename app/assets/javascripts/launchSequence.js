@@ -7,14 +7,16 @@ function launchSequence(){
       views.index(ideasResponse);
     });
 
+  handlers.getTags();
+
   $( "#submitButton" ).click(function(event){
     event.preventDefault();
     var title = $('#ideaTitle').val();
     var body = $('#ideaBody').val();
-    handlers.create(title, body);
+    var tags = $('#ideaTags').val();
+    handlers.create(title, body, tags);
     $('#ideaForm')[0].reset();
   });
-
 
   $('#ideaList').on('click', '.delete', function(event){
     var id = $(this).parent().data('postId');
@@ -62,4 +64,13 @@ function launchSequence(){
     searchedIdeas(theSearch);
   });
 
+  $("#searchBox").on('click', '.tagButton',function(e){
+    e.preventDefault();
+    if ($("#searchBox").find("button:contains("+'All'+")").length === 0)  addTag("All");
+
+    var tag = $(this).html();
+    $(".list-group-item").find("button:not(:contains("+ tag +"))").parent().hide();
+    $(".list-group-item").find("button:contains("+tag+")").parent().show();
+    if (tag === "All") $(".list-group-item").show();
+  });
 }

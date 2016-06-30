@@ -1,12 +1,12 @@
 var handlers = {
-  create: function(title, body){
+  create: function(title, body, tags){
     $.ajax({
       dataType: 'json',
       method: 'POST',
       url: '/api/v1/ideas',
-      data: {idea:{title: title, body: body}},
+      data: {idea:{title: title, body: body, tags: tags}},
       success: function(newIdea){
-        appendNewIdea(newIdea);
+        appendNewIdea(newIdea, tags);
       }
     });
   },
@@ -43,5 +43,11 @@ var handlers = {
       url: '/api/v1/edit/' + id,
       data: content + '=' + value
     });
+  },
+  getTags: function(){
+    $.getJSON('/api/v1/tags').then(
+      function(tagResponse){
+        views.tags(tagResponse);
+      });
   }
 };
