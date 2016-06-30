@@ -49,7 +49,7 @@ function findUnique(duplicatesArray){
 
 
 function addTag(tag){
-  if (tag.length !== 0) $("#searchBox").append($('<button />').addClass('tagButton btn btn-info').text(tag));
+  if (tag.length !== 0 && $("#searchBox").find("button:contains("+tag+")").length === 0 ) $("#searchBox").append($('<button />').addClass('tagButton btn btn-info').text(tag));
 }
 
 function appendTags(tags){
